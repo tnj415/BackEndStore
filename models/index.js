@@ -19,7 +19,7 @@ Category.belongsTo(Product,{
     model: Product,
     unique: true
   },
-  as: 'category_id',
+  foreignKey: 'category_id',
 });
 
 // Products belongToMany Tags (through ProductTag)
