@@ -7,9 +7,7 @@ router.get('/', async (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   try {
-    const tagData = await Tag.findAll({
-      include: [{ model: Product }, { model: ProductTag }],
-    });
+    const tagData = await Tag.findAll();
     res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
@@ -21,7 +19,7 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product }, { model: ProductTag }],
+      include: [{ model: Product, through: ProductTag, as: 'someColumn'}],
     });
 
     if (!tagData) {
@@ -29,7 +27,7 @@ router.get('/:id', async (req, res) => {
       return;
     }
 
-    res.status(200).json(driverData);
+    res.status(200).json(tagData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,7 +36,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new tag
   try {
-    const tagData = await User.create(req.body);
+    const tagData = await Tag.create(req.body);
     // 200 status code means the request is successful
     res.status(200).json(tagData);
   } catch (err) {
