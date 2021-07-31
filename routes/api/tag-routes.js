@@ -19,7 +19,6 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{ model: Product, through: ProductTag, as: 'someColumn'}],
     });
 
     if (!tagData) {
@@ -50,17 +49,7 @@ router.put('/:id', async (req, res) => {
   try {
     const tagData = await Driver.findByPk(req.params.id, {
       include: [{ model: Product }, { model: ProductTag }],
-     // attributes: {
-        // include: [
-        //   [
-        //     // Use plain SQL to add up the total mileage
-        //     sequelize.literal(
-        //       '(SELECT SUM(mileage) FROM car WHERE car.driver_id = driver.id)'
-        //     ),
-        //     'totalMileage',
-        //   ],
-        // ],
-     // },
+  
     });
 
     if (!tagData) {
